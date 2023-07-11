@@ -14,3 +14,9 @@ dependencyResolutionManagement {
 }
 rootProject.name = "NavigationOmada"
 include ':app'
+include ':features:home'
+include ':features:games'
+include ':features:shop'
+include ':features:fullscreen'
+include ':features:onBoarding'
+include ':features:profile'
