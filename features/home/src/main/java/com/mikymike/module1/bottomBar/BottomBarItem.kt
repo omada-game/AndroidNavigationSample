@@ -1,4 +1,4 @@
-package com.mikymike.module1
+package com.mikymike.module1.bottomBar
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
@@ -10,7 +10,7 @@ import com.mikymike.module3.ShopNavGraph
 import com.mikymike.profile.ProfileNavGraph
 import com.ramcosta.composedestinations.spec.NavGraphSpec
 
-enum class BottomBarDestination(
+enum class BottomBarItem(
     val screen: NavGraphSpec, val icon: ImageVector, val label: String
 ) {
     Games(screen = GamesNavGraph, icon = Icons.Default.Home, "Games"), Shop(

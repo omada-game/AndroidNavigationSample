@@ -1,4 +1,4 @@
-package com.mikymike.module1
+package com.mikymike.module1.bottomBar
 
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -20,7 +20,7 @@ fun BottomBar(
         backgroundColor = Color.Gray,
         contentColor = Color.White,
     ) {
-        BottomBarDestination.values().forEach { item ->
+        BottomBarItem.values().forEach { item ->
             BottomNavigationItem(icon = { Icon(item.icon, contentDescription = item.label) },
                 label = { Text(text = item.label) },
                 selected = selectedNavigation == item.screen,

@@ -23,7 +23,7 @@ private const val ON_BOARDING_IS_FINISHED = "onBoardingIsFinished"
 @Destination
 @Composable
 fun OnBoardingScreen(
-    onBoardingIsFinished: OnBoardingIsFinished, openBottomSheet: OpenBottomSheet
+    onBoardingIsFinished: OnBoardingIsFinished
 ) {
     val activity = LocalContext.current.let {
         when (it) {
@@ -36,7 +36,8 @@ fun OnBoardingScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Red), contentAlignment = Alignment.Center
+            .background(Color.Red),
+        contentAlignment = Alignment.Center
     ) {
         Column {
             Button(onClick = {
@@ -47,12 +48,6 @@ fun OnBoardingScreen(
             }) {
                 Text(text = "On Boarding")
             }
-            Button(onClick = {
-                openBottomSheet.invoke()
-            }) {
-                Text(text = "BottomSheet")
-            }
         }
-
     }
 }

@@ -1,4 +1,4 @@
-package com.mikymike.module1
+package com.mikymike.module1.navigation
 
 import com.mikymike.module2.GamesNavGraph
 import com.mikymike.module3.ShopNavGraph

@@ -20,10 +20,15 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.rememberNavController
+import com.mikymike.module1.bottomBar.BottomBar
+import com.mikymike.module1.navigation.BottomNavGraph
 import com.mikymike.module2.GamesNavGraph
+import com.mikymike.module2.navigation.OpenShop
+import com.mikymike.module3.ShopNavGraph
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
+import com.ramcosta.composedestinations.navigation.dependency
 import com.ramcosta.composedestinations.navigation.navigate
 import com.ramcosta.composedestinations.spec.NavGraphSpec
 
@@ -32,20 +37,34 @@ import com.ramcosta.composedestinations.spec.NavGraphSpec
 @Destination
 @Composable
 fun HomeScreen() {
+    // TODO: Create simulation of DailyCoins
+    val showDailyCoins by remember { mutableStateOf(false) }
+
     val navController = rememberNavController()
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Blue)
     ) {
-        DestinationsNavHost(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f),
+        DestinationsNavHost(modifier = Modifier
+            .fillMaxWidth()
+            .weight(1f),
             navController = navController,
             navGraph = BottomNavGraph,
-            startRoute = GamesNavGraph
-        )
+            startRoute = GamesNavGraph,
+            dependenciesContainerBuilder = {
+                dependency(GamesNavGraph) {
+                    OpenShop {
+                        navController.navigate(ShopNavGraph, fun NavOptionsBuilder.() {
+                            launchSingleTop = true
+                            restoreState = true
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                        })
+                    }
+                }
+            })
 
         val currentDestination by navController.currentDestinationAsState()
 

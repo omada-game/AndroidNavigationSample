@@ -1,9 +1,8 @@
-package com.mikymike.navigationomada.ui
+package com.mikymike.module1.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -13,7 +12,7 @@ import androidx.compose.ui.graphics.Color
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.spec.DestinationStyle
 
-@Destination(style = DestinationStyle.BottomSheet::class)
+//@Destination(style = DestinationStyle.BottomSheet::class)
 @Composable
 fun BottomSheet() {
     Box(
