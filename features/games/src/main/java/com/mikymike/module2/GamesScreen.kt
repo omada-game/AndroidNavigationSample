@@ -14,6 +14,7 @@ import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.mikymike.module2.navigation.OpenCards
 import com.mikymike.module2.navigation.OpenShop
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
@@ -22,7 +23,7 @@ import com.ramcosta.composedestinations.annotation.RootNavGraph
 @Destination
 @Composable
 fun GamesScreen(
-    openShop: OpenShop
+    openShop: OpenShop, openCards: OpenCards
 ) {
     Box(
         modifier = Modifier
@@ -41,7 +42,7 @@ fun GamesScreen(
             }
             Spacer(modifier = Modifier.height(10.dp))
             Button(onClick = {
-
+                openCards.invoke()
             }) {
                 Text(text = "OpenCards")
             }

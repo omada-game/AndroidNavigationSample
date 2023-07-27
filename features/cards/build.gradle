@@ -40,8 +40,8 @@ android {
     }
 }
 ksp {
-    arg("compose-destinations.mode", "navgraphs")
-    arg("compose-destinations.moduleName", "fullscreen")
+    arg("compose-destinations.mode", "destinations")
+    arg("compose-destinations.moduleName", "cards")
     arg("compose-destinations.useComposableVisibility", "true")
 }
 
@@ -58,4 +58,5 @@ dependencies {
     // NAVIGATION
     implementation 'io.github.raamcosta.compose-destinations:animations-core:1.7.41-beta'
     ksp 'io.github.raamcosta.compose-destinations:ksp:1.7.41-beta'
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.31.5-beta"
 }

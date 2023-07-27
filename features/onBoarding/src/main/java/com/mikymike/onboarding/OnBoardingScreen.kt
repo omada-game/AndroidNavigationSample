@@ -10,10 +10,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 
@@ -33,11 +35,16 @@ fun OnBoardingScreen(
         }
     }
 
+    val systemUiController = rememberSystemUiController()
+
+    LaunchedEffect(systemUiController) {
+        systemUiController.setSystemBarsColor(color = Color.Transparent, darkIcons = false)
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Red),
-        contentAlignment = Alignment.Center
+            .background(Color.Red), contentAlignment = Alignment.Center
     ) {
         Column {
             Button(onClick = {

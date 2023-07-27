@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
@@ -17,15 +16,13 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
-
         setContent {
             NavigationOmadaTheme {
                 Surface {
                     OmadaApp(
                         modifier = Modifier.fillMaxSize(),
                         onBoardingIsFinished = getPreferences(MODE_PRIVATE).getBoolean(
-                            ON_BOARDING_IS_FINISHED,
-                            false
+                            ON_BOARDING_IS_FINISHED, false
                         )
                     )
                 }

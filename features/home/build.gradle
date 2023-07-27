@@ -41,9 +41,7 @@ android {
 }
 
 ksp {
-    arg("compose-destinations.mode", "navgraphs")
-    arg("compose-destinations.moduleName", "home")
-    arg("compose-destinations.useComposableVisibility", "true")
+    arg("compose-destinations.generateNavGraphs", "false")
 }
 
 dependencies {
@@ -60,9 +58,11 @@ dependencies {
     // NAVIGATION
     implementation 'io.github.raamcosta.compose-destinations:animations-core:1.7.41-beta'
     ksp 'io.github.raamcosta.compose-destinations:ksp:1.7.41-beta'
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.31.5-beta"
 
     implementation project(":features:games")
     implementation project(":features:shop")
     implementation project(":features:profile")
+    implementation project(':features:cards')
 
 }
