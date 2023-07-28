@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
-    id 'com.google.devtools.ksp' version '1.7.20-1.0.8' // Depends on your kotlin version
+    id 'com.google.devtools.ksp'
 }
 
 android {
@@ -26,17 +26,14 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = '1.8'
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     buildFeatures {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion '1.3.2'
+        kotlinCompilerExtensionVersion '1.4.4'
     }
 }
 ksp {
@@ -47,15 +44,15 @@ ksp {
 
 dependencies {
     implementation 'androidx.core:core-ktx:1.10.1'
-    implementation platform('org.jetbrains.kotlin:kotlin-bom:1.7.20')
+    implementation platform('org.jetbrains.kotlin:kotlin-bom:1.8.10')
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
     implementation 'androidx.activity:activity-compose:1.7.2'
-    implementation platform('androidx.compose:compose-bom:2023.01.00')
+    implementation platform('androidx.compose:compose-bom:2023.06.01')
     implementation 'androidx.compose.ui:ui'
     implementation 'androidx.compose.ui:ui-graphics'
     implementation 'androidx.compose.ui:ui-tooling-preview'
     implementation 'androidx.compose.material3:material3'
     // NAVIGATION
-    implementation 'io.github.raamcosta.compose-destinations:animations-core:1.7.41-beta'
-    ksp 'io.github.raamcosta.compose-destinations:ksp:1.7.41-beta'
+    implementation 'io.github.raamcosta.compose-destinations:animations-core:1.8.42-beta'
+    ksp 'io.github.raamcosta.compose-destinations:ksp:1.8.42-beta'
 }
