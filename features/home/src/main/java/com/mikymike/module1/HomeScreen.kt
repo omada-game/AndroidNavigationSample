@@ -165,7 +165,6 @@ fun HomeScreen(
     }
 }
 
-
 @Stable
 @Composable
 private fun NavController.currentDestinationAsState(): State<NavGraphSpec> {
