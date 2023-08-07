@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.mikymike.module3.destinations.ShopDialogDestination
+import com.ramcosta.composedestinations.annotation.DeepLink
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -23,7 +24,11 @@ import com.ramcosta.composedestinations.result.ResultRecipient
 import com.ramcosta.composedestinations.result.getOr
 
 @RootNavGraph(start = true)
-@Destination
+@Destination(
+    deepLinks = [DeepLink(
+        uriPattern = "omadagame://destination/shop"
+    )]
+)
 @Composable
 fun ShopScreen(
     navigator: DestinationsNavigator,

@@ -9,9 +9,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import com.ramcosta.composedestinations.annotation.DeepLink
 import com.ramcosta.composedestinations.annotation.Destination
 
-@Destination
+@Destination(
+    deepLinks = [DeepLink(
+        uriPattern = "omadagame://destination/live"
+    )]
+)
 @Composable
 fun LiveScreen() {
     Box(
