@@ -113,7 +113,7 @@ fun HomeScreen(
                     }
                     dependency(ProfileNavGraph) {
                         OpenLive {
-                            navigator.navigate(LiveScreenDestination)
+                            navigator.navigate(LiveScreenDestination(origin = "Profile"))
                         }
                     }
                 })

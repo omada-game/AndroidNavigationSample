@@ -14,17 +14,19 @@ import com.ramcosta.composedestinations.annotation.Destination
 
 @Destination(
     deepLinks = [DeepLink(
-        uriPattern = "omadagame://destination/live"
+        uriPattern = "omadagame://destination/live/{origin}"
     )]
 )
 @Composable
-fun LiveScreen() {
+fun LiveScreen(
+    origin: String
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.DarkGray),
         contentAlignment = Alignment.Center
     ) {
-        Text(text = "Live !!", style = TextStyle(color = Color.White))
+        Text(text = "Live origin: $origin !!", style = TextStyle(color = Color.White))
     }
 }
