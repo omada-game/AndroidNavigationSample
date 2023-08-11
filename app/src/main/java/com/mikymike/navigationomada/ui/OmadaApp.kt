@@ -2,6 +2,7 @@ package com.mikymike.navigationomada.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.core.splashscreen.SplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.mikymike.module1.navigation.HomeNavGraph
 import com.mikymike.navigationomada.MainNavGraph
@@ -13,7 +14,7 @@ import com.ramcosta.composedestinations.navigation.navigate
 
 @Composable
 fun OmadaApp(
-    modifier: Modifier = Modifier, onBoardingIsFinished: Boolean = false
+    modifier: Modifier = Modifier, splashScreen: SplashScreen, onBoardingIsFinished: Boolean = false
 ) {
     val navController = rememberNavController()
     val startRoute = if (onBoardingIsFinished) HomeNavGraph else OnBoardingNavGraph
@@ -26,5 +27,6 @@ fun OmadaApp(
             dependency(OnBoardingNavGraph) {
                 OnBoardingIsFinished { navController.navigate(HomeNavGraph) }
             }
+            dependency(splashScreen)
         })
 }

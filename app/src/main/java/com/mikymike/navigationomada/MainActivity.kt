@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import com.mikymike.navigationomada.ui.OmadaApp
 import com.mikymike.navigationomada.ui.theme.NavigationOmadaTheme
@@ -13,12 +14,16 @@ private const val ON_BOARDING_IS_FINISHED = "onBoardingIsFinished"
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
+
+        splashScreen.setKeepOnScreenCondition { true }
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             NavigationOmadaTheme {
                 OmadaApp(
                     modifier = Modifier.fillMaxSize(),
+                    splashScreen = splashScreen,
                     onBoardingIsFinished = getPreferences(MODE_PRIVATE).getBoolean(
                         ON_BOARDING_IS_FINISHED, false
                     )

@@ -21,7 +21,7 @@ android {
         }
     }
 
-    applicationVariants.all { variant -> variant.addJavaSourceFoldersToModel(new File(buildDir, "generated/ksp/${variant.name}/kotlin"))
+    applicationVariants.configureEach { variant -> variant.addJavaSourceFoldersToModel(new File(buildDir, "generated/ksp/${variant.name}/kotlin"))
     }
 
     buildTypes {

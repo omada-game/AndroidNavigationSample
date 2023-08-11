@@ -11,10 +11,14 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.splashscreen.SplashScreen
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
@@ -25,8 +29,16 @@ private const val ON_BOARDING_IS_FINISHED = "onBoardingIsFinished"
 @Destination
 @Composable
 fun OnBoardingScreen(
+    viewModel: OnBoardingViewModel = viewModel(),
+    splashScreen: SplashScreen,
     onBoardingIsFinished: OnBoardingIsFinished
 ) {
+    val systemUiController = rememberSystemUiController()
+
+    LaunchedEffect(systemUiController) {
+        systemUiController.setSystemBarsColor(color = Color.Transparent, darkIcons = false)
+    }
+
     val activity = LocalContext.current.let {
         when (it) {
             is Activity -> it
@@ -35,10 +47,10 @@ fun OnBoardingScreen(
         }
     }
 
-    val systemUiController = rememberSystemUiController()
+    val isLoading by viewModel.isLoading.collectAsState()
 
-    LaunchedEffect(systemUiController) {
-        systemUiController.setSystemBarsColor(color = Color.Transparent, darkIcons = false)
+    LaunchedEffect(isLoading) {
+        if (!isLoading) splashScreen.setKeepOnScreenCondition { false }
     }
 
     Box(

@@ -1,6 +1,5 @@
 package com.mikymike.module1
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -21,6 +20,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,6 +28,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.core.splashscreen.SplashScreen
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -59,19 +61,21 @@ import com.ramcosta.composedestinations.spec.NavGraphSpec
 @Destination
 @Composable
 fun HomeScreen(
+    viewModel: HomeViewModel = viewModel(),
+    splashScreen: SplashScreen,
     navigator: DestinationsNavigator
 ) {
     val systemUiController = rememberSystemUiController()
 
     LaunchedEffect(systemUiController) {
         systemUiController.setStatusBarColor(color = Color.Transparent, darkIcons = true)
-        systemUiController.setNavigationBarColor(color = Color.White, darkIcons = true)
+        systemUiController.setNavigationBarColor(color = Color.Transparent, darkIcons = true)
     }
 
     val navController = rememberNavController()
 
     var showModalBottomSheet by remember {
-        mutableStateOf(true)
+        mutableStateOf(false)
     }
 
     var bottomSheetType by remember {
@@ -80,13 +84,20 @@ fun HomeScreen(
 
     val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
+    val isLoading by viewModel.isLoading.collectAsState()
+
+    LaunchedEffect(isLoading) {
+        if (!isLoading) splashScreen.setKeepOnScreenCondition { false }
+    }
+
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .windowInsetsPadding(WindowInsets.navigationBars)
-            .background(Color.Blue)
+        modifier = Modifier.fillMaxSize()
     ) {
-        Column(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .windowInsetsPadding(WindowInsets.navigationBars)
+        ) {
             DestinationsNavHost(modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f),
