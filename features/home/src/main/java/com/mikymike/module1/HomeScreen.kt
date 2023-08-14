@@ -56,7 +56,6 @@ import com.ramcosta.composedestinations.navigation.dependency
 import com.ramcosta.composedestinations.navigation.navigate
 import com.ramcosta.composedestinations.spec.NavGraphSpec
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Destination
 @Composable

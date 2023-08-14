@@ -30,7 +30,6 @@ import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.dependency
 import com.ramcosta.composedestinations.rememberNavHostEngine
 
-
 @RootNavGraph(start = true)
 @Destination
 @Composable
@@ -65,7 +64,7 @@ private fun OnBoardingScreen(
 ) {
 
     val engine = rememberNavHostEngine(
-        rootDefaultAnimations = RootNavGraphDefaultAnimations.ACCOMPANIST_FADING,
+        rootDefaultAnimations = RootNavGraphDefaultAnimations.ACCOMPANIST_FADING
     )
 
     Box(modifier = modifier) {
