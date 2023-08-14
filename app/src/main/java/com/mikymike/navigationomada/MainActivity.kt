@@ -1,5 +1,6 @@
 package com.mikymike.navigationomada
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,7 +11,7 @@ import androidx.core.view.WindowCompat
 import com.mikymike.navigationomada.ui.OmadaApp
 import com.mikymike.navigationomada.ui.theme.NavigationOmadaTheme
 
-private const val ON_BOARDING_IS_FINISHED = "onBoardingIsFinished"
+private const val SHOW_ON_BOARDING = "show_on_boarding"
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,15 +20,20 @@ class MainActivity : ComponentActivity() {
 
         splashScreen.setKeepOnScreenCondition { true }
         WindowCompat.setDecorFitsSystemWindows(window, false)
+
         setContent {
             NavigationOmadaTheme {
-                OmadaApp(
-                    modifier = Modifier.fillMaxSize(),
-                    splashScreen = splashScreen,
-                    onBoardingIsFinished = getPreferences(MODE_PRIVATE).getBoolean(
-                        ON_BOARDING_IS_FINISHED, false
-                    )
-                )
+                OmadaApp(modifier = Modifier.fillMaxSize(),
+                    showOnBoarding = getPreferences(MODE_PRIVATE).getBoolean(
+                        SHOW_ON_BOARDING, true
+                    ),
+                    onBoardingIsDone = {
+                        getPreferences(Context.MODE_PRIVATE)?.edit()
+                            ?.putBoolean(SHOW_ON_BOARDING, false)?.apply()
+                    },
+                    appLoadingIsFinished = {
+                        splashScreen.setKeepOnScreenCondition { false }
+                    })
             }
         }
     }

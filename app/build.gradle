@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace 'com.mikymike.navigationomada'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.mikymike.navigationomada"
         minSdk 24
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -19,9 +19,6 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
-    }
-
-    applicationVariants.configureEach { variant -> variant.addJavaSourceFoldersToModel(new File(buildDir, "generated/ksp/${variant.name}/kotlin"))
     }
 
     buildTypes {
@@ -62,8 +59,8 @@ dependencies {
     implementation 'androidx.compose.material3:material3'
     implementation 'androidx.compose.material:material'
     // NAVIGATION
-    implementation 'io.github.raamcosta.compose-destinations:animations-core:1.8.42-beta'
-    ksp 'io.github.raamcosta.compose-destinations:ksp:1.8.42-beta'
+    implementation 'io.github.raamcosta.compose-destinations:core:1.9.51'
+    ksp 'io.github.raamcosta.compose-destinations:ksp:1.9.51'
     // SPLASHSCREEN
     implementation "androidx.core:core-splashscreen:1.0.1"
 

@@ -28,7 +28,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.core.splashscreen.SplashScreen
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
@@ -62,7 +61,7 @@ import com.ramcosta.composedestinations.spec.NavGraphSpec
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = viewModel(),
-    splashScreen: SplashScreen,
+//    splashScreen: SplashScreen, TODO: Replace with a callback
     navigator: DestinationsNavigator
 ) {
     val systemUiController = rememberSystemUiController()
@@ -86,9 +85,9 @@ fun HomeScreen(
 
     val isLoading by viewModel.isLoading.collectAsState()
 
-    LaunchedEffect(isLoading) {
-        if (!isLoading) splashScreen.setKeepOnScreenCondition { false }
-    }
+//    LaunchedEffect(isLoading) {TODO: Replace with a callback
+//        if (!isLoading) splashScreen.setKeepOnScreenCondition { false }
+//    }
 
     Box(
         modifier = Modifier.fillMaxSize()

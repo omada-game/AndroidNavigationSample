@@ -6,19 +6,15 @@ plugins {
 
 android {
     namespace 'com.mikymike.home'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         minSdk 24
-        targetSdk 33
+        targetSdk 34
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
-
-    libraryVariants.all { variant -> variant.addJavaSourceFoldersToModel(new File(buildDir, "generated/ksp/${variant.name}/kotlin"))
-    }
-
     buildTypes {
         release {
             minifyEnabled false
@@ -43,7 +39,6 @@ ksp {
 
 dependencies {
     implementation 'androidx.core:core-ktx:1.10.1'
-    implementation "androidx.core:core-splashscreen:1.0.1"
     implementation platform('org.jetbrains.kotlin:kotlin-bom:1.8.10')
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
     implementation 'androidx.activity:activity-compose:1.7.2'
@@ -54,8 +49,8 @@ dependencies {
     implementation 'androidx.compose.material3:material3'
     implementation 'androidx.compose.material:material'
     // NAVIGATION
-    implementation 'io.github.raamcosta.compose-destinations:animations-core:1.8.42-beta'
-    ksp 'io.github.raamcosta.compose-destinations:ksp:1.8.42-beta'
+    implementation 'io.github.raamcosta.compose-destinations:core:1.9.51'
+    ksp 'io.github.raamcosta.compose-destinations:ksp:1.9.51'
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.31.5-beta"
 
     implementation project(":features:games")
