@@ -3,6 +3,7 @@ package com.mikymike.navigationomada.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
+import com.mikymike.module1.navigation.HomeLoadingFinished
 import com.mikymike.module1.navigation.HomeNavGraph
 import com.mikymike.navigationomada.MainNavGraph
 import com.mikymike.onboarding.OnBoardingNavGraph
@@ -38,6 +39,11 @@ fun OmadaApp(
             }
             dependency(OnBoardingNavGraph) {
                 OnBoardingLoadingFinished {
+                    appLoadingIsFinished()
+                }
+            }
+            dependency(HomeNavGraph) {
+                HomeLoadingFinished {
                     appLoadingIsFinished()
                 }
             }

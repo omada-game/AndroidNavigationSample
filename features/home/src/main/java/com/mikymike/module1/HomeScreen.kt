@@ -40,6 +40,7 @@ import com.mikymike.cards.CardsScreen
 import com.mikymike.module1.bottomBar.BottomBar
 import com.mikymike.module1.destinations.LiveScreenDestination
 import com.mikymike.module1.navigation.BottomNavGraph
+import com.mikymike.module1.navigation.HomeLoadingFinished
 import com.mikymike.module1.screens.BottomSheetType
 import com.mikymike.module1.sheet.DailyCoins
 import com.mikymike.module2.GamesNavGraph
@@ -61,7 +62,7 @@ import com.ramcosta.composedestinations.spec.NavGraphSpec
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = viewModel(),
-//    splashScreen: SplashScreen, TODO: Replace with a callback
+    homeLoadingFinished: HomeLoadingFinished,
     navigator: DestinationsNavigator
 ) {
     val systemUiController = rememberSystemUiController()
@@ -85,9 +86,9 @@ fun HomeScreen(
 
     val isLoading by viewModel.isLoading.collectAsState()
 
-//    LaunchedEffect(isLoading) {TODO: Replace with a callback
-//        if (!isLoading) splashScreen.setKeepOnScreenCondition { false }
-//    }
+    LaunchedEffect(isLoading) {
+        if (!isLoading) homeLoadingFinished.invoke()
+    }
 
     Box(
         modifier = Modifier.fillMaxSize()

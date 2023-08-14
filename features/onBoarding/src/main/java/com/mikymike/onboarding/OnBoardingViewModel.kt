@@ -13,7 +13,7 @@ class OnBoardingViewModel : ViewModel() {
 
     init {
         viewModelScope.launch(Dispatchers.Default) {
-            delay(1500)
+            delay(1000)
             isLoading.emit(false)
         }
     }
