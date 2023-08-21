@@ -53,5 +53,6 @@ fun OmadaApp(
                     appLoadingIsFinished()
                 }
             }
-        })
+        }
+    )
 }

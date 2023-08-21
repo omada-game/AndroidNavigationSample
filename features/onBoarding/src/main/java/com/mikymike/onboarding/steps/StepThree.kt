@@ -50,7 +50,9 @@ fun StepThree(
             .background(Color.Blue),
         contentAlignment = Alignment.Center
     ) {
-        Button(onClick = { navigator.navigate(StepFourDestination) }) {
+        Button(onClick = {
+            navigator.navigate(StepFourDestination)
+        }) {
             Text(text = "Go to fourth step")
         }
     }

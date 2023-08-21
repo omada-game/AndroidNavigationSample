@@ -10,9 +10,11 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import com.mikymike.navigationomada.ui.OmadaApp
 import com.mikymike.navigationomada.ui.theme.NavigationOmadaTheme
+import dagger.hilt.android.AndroidEntryPoint
 
 private const val SHOW_ON_BOARDING = "show_on_boarding"
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()

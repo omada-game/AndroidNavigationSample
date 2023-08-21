@@ -1,7 +1,6 @@
 package com.mikymike.onboarding
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -67,26 +66,24 @@ private fun OnBoardingScreen(
         rootDefaultAnimations = RootNavGraphDefaultAnimations.ACCOMPANIST_FADING
     )
 
-    Box(modifier = modifier) {
-        Column(
-            modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = "Steps", style = TextStyle(
-                    fontSize = 32.sp
-                )
+    Column(
+        modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "Steps", style = TextStyle(
+                fontSize = 32.sp
             )
-            DestinationsNavHost(modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f),
-                navGraph = ContentNavGraph,
-                engine = engine,
-                dependenciesContainerBuilder = {
-                    dependency(StepFourDestination) {
-                        onBoardingIsDone
-                    }
-                })
-        }
+        )
+        DestinationsNavHost(modifier = Modifier
+            .fillMaxWidth()
+            .weight(1f),
+            navGraph = ContentNavGraph,
+            engine = engine,
+            dependenciesContainerBuilder = {
+                dependency(StepFourDestination) {
+                    onBoardingIsDone
+                }
+            })
     }
 }
 
