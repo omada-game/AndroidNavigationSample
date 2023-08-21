@@ -1,4 +1,4 @@
-package com.mikymike.module2
+package com.mikymike.profile.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -10,41 +10,35 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.mikymike.module2.navigation.OpenCards
-import com.mikymike.module2.navigation.OpenShop
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.mikymike.profile.navigation.OpenLive
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 
 @RootNavGraph(start = true)
 @Destination
 @Composable
-fun GamesScreen(
-    openShop: OpenShop, openCards: OpenCards
+fun ProfileScreen(
+    viewModel: ProfileViewModel = hiltViewModel(), openLive: OpenLive
 ) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Yellow)
+            .background(Color.Green),
+        contentAlignment = Alignment.Center
     ) {
-        Text(
-            modifier = Modifier.align(BiasAlignment(horizontalBias = 0f, verticalBias = -0.75f)),
-            text = "Games"
-        )
-        Column(modifier = Modifier.align(Alignment.Center)) {
-            Button(onClick = {
-                openShop.invoke()
-            }) {
-                Text(text = "OpenShop")
-            }
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(
+                text = "Profile"
+            )
             Spacer(modifier = Modifier.height(10.dp))
             Button(onClick = {
-                openCards.invoke()
+                openLive.invoke()
             }) {
-                Text(text = "OpenCards")
+                Text(text = "Open live")
             }
         }
     }

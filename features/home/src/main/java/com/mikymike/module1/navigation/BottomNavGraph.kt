@@ -1,8 +1,8 @@
 package com.mikymike.module1.navigation
 
-import com.mikymike.module2.GamesNavGraph
+import com.mikymike.module2.ui.GamesNavGraph
 import com.mikymike.module3.ShopNavGraph
-import com.mikymike.profile.ProfileNavGraph
+import com.mikymike.profile.ui.ProfileNavGraph
 import com.ramcosta.composedestinations.spec.DestinationSpec
 import com.ramcosta.composedestinations.spec.NavGraphSpec
 import com.ramcosta.composedestinations.spec.Route

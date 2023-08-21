@@ -41,14 +41,14 @@ import com.mikymike.module1.bottomBar.BottomBar
 import com.mikymike.module1.destinations.LiveScreenDestination
 import com.mikymike.module1.navigation.BottomNavGraph
 import com.mikymike.module1.navigation.HomeLoadingFinished
-import com.mikymike.module1.screens.BottomSheetType
+import com.mikymike.module1.sheet.BottomSheetType
 import com.mikymike.module1.sheet.DailyCoins
-import com.mikymike.module2.GamesNavGraph
 import com.mikymike.module2.navigation.OpenCards
 import com.mikymike.module2.navigation.OpenShop
+import com.mikymike.module2.ui.GamesNavGraph
 import com.mikymike.module3.ShopNavGraph
-import com.mikymike.profile.ProfileNavGraph
 import com.mikymike.profile.navigation.OpenLive
+import com.mikymike.profile.ui.ProfileNavGraph
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator

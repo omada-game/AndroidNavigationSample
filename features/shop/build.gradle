@@ -2,6 +2,8 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'com.google.devtools.ksp'
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
 }
 
 android {
@@ -38,6 +40,9 @@ ksp {
     arg("compose-destinations.moduleName", "shop")
     arg("compose-destinations.useComposableVisibility", "true")
 }
+kapt {
+    correctErrorTypes true
+}
 
 dependencies {
     implementation 'androidx.core:core-ktx:1.10.1'
@@ -52,4 +57,8 @@ dependencies {
     // NAVIGATION
     implementation 'io.github.raamcosta.compose-destinations:core:1.9.51'
     ksp 'io.github.raamcosta.compose-destinations:ksp:1.9.51'
+    // HILT
+    implementation "com.google.dagger:hilt-android:2.46.1"
+    kapt "com.google.dagger:hilt-compiler:2.46.1"
+    implementation "androidx.hilt:hilt-navigation-compose:1.1.0-alpha01"
 }

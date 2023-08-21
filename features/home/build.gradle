@@ -59,8 +59,9 @@ dependencies {
     ksp 'io.github.raamcosta.compose-destinations:ksp:1.9.51'
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.31.5-beta"
     implementation "com.google.dagger:hilt-android:2.46.1"
-    implementation "androidx.hilt:hilt-navigation-compose:1.1.0-alpha01"
     kapt "com.google.dagger:hilt-compiler:2.46.1"
+    implementation "androidx.hilt:hilt-navigation-compose:1.1.0-alpha01"
+
 
     implementation project(":features:games")
     implementation project(":features:shop")

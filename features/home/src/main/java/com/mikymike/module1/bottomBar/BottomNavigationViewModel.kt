@@ -4,9 +4,12 @@ import androidx.annotation.DrawableRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mikymike.home.R
-import com.mikymike.module2.GamesNavGraph
+import com.mikymike.module2.ui.GamesNavGraph
+import com.mikymike.module2.ui.dot.GamesDotManager
 import com.mikymike.module3.ShopNavGraph
-import com.mikymike.profile.ProfileNavGraph
+import com.mikymike.module3.dot.ShopDotManager
+import com.mikymike.profile.ui.ProfileNavGraph
+import com.mikymike.profile.ui.dot.ProfileDotManager
 import com.ramcosta.composedestinations.spec.NavGraphSpec
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,7 +32,9 @@ data class BottomBarItemUi(
 
 @HiltViewModel
 class BottomNavigationViewModel @Inject constructor(
-    bottomBarManager: BottomBarManager
+    gamesDotManager: GamesDotManager,
+    shopDotManager: ShopDotManager,
+    profileDotManager: ProfileDotManager
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<BottomBarUi> = MutableStateFlow(createInitialState())
@@ -37,9 +42,9 @@ class BottomNavigationViewModel @Inject constructor(
 
     init {
         combine(
-            bottomBarManager.showGamesDot,
-            bottomBarManager.showShopDot,
-            bottomBarManager.showProfileDot
+            gamesDotManager.showGamesDot,
+            shopDotManager.showShopDot,
+            profileDotManager.showProfileDot
         ) { showGamesDot, showShopDot, showProfileDot ->
             val gamesItem = _uiState.value.items[0].copy(showDot = showGamesDot)
             val shopItem = _uiState.value.items[1].copy(showDot = showShopDot)
