@@ -67,5 +67,5 @@ dependencies {
     implementation project(":features:shop")
     implementation project(":features:profile")
     implementation project(':features:cards')
-
+    implementation project(':libraries:design')
 }

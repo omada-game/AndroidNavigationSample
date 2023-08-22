@@ -1,19 +1,17 @@
 package com.mikymike.module1
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -24,11 +22,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -36,13 +38,14 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.mikymike.cards.CardsScreen
+import com.mikymike.cards.CardsSheetContent
+import com.mikymike.design.SheetController
+import com.mikymike.design.rememberSheetController
 import com.mikymike.module1.bottomBar.BottomBar
 import com.mikymike.module1.destinations.LiveScreenDestination
 import com.mikymike.module1.navigation.BottomNavGraph
 import com.mikymike.module1.navigation.HomeLoadingFinished
-import com.mikymike.module1.sheet.BottomSheetType
-import com.mikymike.module1.sheet.DailyCoins
+import com.mikymike.module1.sheet.DailyCoinsSheetContent
 import com.mikymike.module2.navigation.OpenCards
 import com.mikymike.module2.navigation.OpenShop
 import com.mikymike.module2.ui.GamesNavGraph
@@ -55,43 +58,82 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.dependency
 import com.ramcosta.composedestinations.navigation.navigate
 import com.ramcosta.composedestinations.spec.NavGraphSpec
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterialApi::class)
 @Destination
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = viewModel(),
+    viewModel: HomeViewModel = hiltViewModel(),
+    sheetController: SheetController = rememberSheetController(),
     homeLoadingFinished: HomeLoadingFinished,
     navigator: DestinationsNavigator
 ) {
-    val systemUiController = rememberSystemUiController()
+    val coroutineScope = rememberCoroutineScope()
 
+    // System's bar colors
+    val systemUiController = rememberSystemUiController()
     LaunchedEffect(systemUiController) {
         systemUiController.setStatusBarColor(color = Color.Transparent, darkIcons = true)
         systemUiController.setNavigationBarColor(color = Color.Transparent, darkIcons = true)
     }
 
+    // Navigation
     val navController = rememberNavController()
 
-    var showModalBottomSheet by remember {
-        mutableStateOf(false)
+
+    // Sheet : TODO: Using sheetController behavior for bottomSheet disable entry animation. Change it(maybe with material3 modal)!!
+    val sheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden, skipHalfExpanded = true
+    )
+    val lifeCycle = LocalLifecycleOwner.current.lifecycle
+    var isResumed by remember { mutableStateOf(false) }
+    LaunchedEffect(lifeCycle) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                isResumed = true
+            } else if (event == Lifecycle.Event.ON_PAUSE) {
+                isResumed = false
+            }
+        }
+        lifeCycle.addObserver(observer)
     }
-
-    var bottomSheetType by remember {
-        mutableStateOf(BottomSheetType.DAILY_COINS)
+    if (isResumed) {
+        sheetController.Setup(sheetState = sheetState)
     }
+    val currentSheetContent by sheetController.currentContent.collectAsState()
 
-    val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
+    // Loading
     val isLoading by viewModel.isLoading.collectAsState()
-
     LaunchedEffect(isLoading) {
         if (!isLoading) homeLoadingFinished.invoke()
     }
 
-    Box(
-        modifier = Modifier.fillMaxSize()
-    ) {
+    // UI Effects
+    LaunchedEffect(key1 = Unit) {
+        viewModel.uiEffects.onEach {
+            when (it) {
+                HomeUiEffects.ShowDailyCoins -> {
+                    sheetController.show(DailyCoinsSheetContent())
+                }
+            }
+        }.launchIn(this)
+    }
+
+    // UI
+    ModalBottomSheetLayout(modifier = Modifier.fillMaxSize(),
+        sheetState = sheetState,
+        sheetElevation = 4.dp,
+        sheetBackgroundColor = currentSheetContent?.backgroundColor ?: Color.White,
+        sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
+        sheetContent = {
+            currentSheetContent?.Content(
+                columnScope = this, sheetState = sheetState
+            )
+        }) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -117,8 +159,9 @@ fun HomeScreen(
                     }
                     dependency(GamesNavGraph) {
                         OpenCards {
-                            bottomSheetType = BottomSheetType.CARDS
-                            showModalBottomSheet = true
+                            coroutineScope.launch {
+                                sheetController.show(CardsSheetContent())
+                            }
                         }
                     }
                     dependency(ProfileNavGraph) {
@@ -143,34 +186,6 @@ fun HomeScreen(
                         }
                     })
                 })
-        }
-
-        if (showModalBottomSheet) {
-            ModalBottomSheet(
-                modifier = Modifier.fillMaxWidth(),
-                onDismissRequest = { showModalBottomSheet = false },
-                sheetState = bottomSheetState,
-                shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
-                containerColor = when (bottomSheetType) {
-                    BottomSheetType.CARDS -> Color.Magenta
-                    else -> Color.White
-                },
-                windowInsets = WindowInsets(0)
-            ) {
-                when (bottomSheetType) {
-                    BottomSheetType.DAILY_COINS -> DailyCoins(modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight(0.3f),
-                        onDismiss = { showModalBottomSheet = false })
-
-                    BottomSheetType.CARDS -> CardsScreen(modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight(0.75f),
-                        onDismiss = { showModalBottomSheet = false })
-
-                    BottomSheetType.DEFAULT -> Spacer(modifier = Modifier)
-                }
-            }
         }
     }
 }
